@@ -524,15 +524,19 @@ public class DefaultUpdater2 extends UpdateManagerBase implements IUpdater {
 	private static final int MAX_KEY_LENGTH = 8192;
 
 	public String requestKeyFromServer() throws IOException {
-		Response response = sendRequest(getRequestURL(
-				"registration/request/key", null));
+		MoSyncTool.Logger.log("DefaultUpdater2.requestKeyFromServer");
+		URL requestURL = getRequestURL("registration/request/key", null);
+		MoSyncTool.Logger.log("  requestURL: " + requestURL);
+		Response response = sendRequest(requestURL);
+		MoSyncTool.Logger.log("  response content length: "
+			+ response.getContentLength());
 		byte[] buffer = new byte[MAX_KEY_LENGTH];
 		try {
 			InputStream input = response.getContent();
 			int len = input.read(buffer);
+			MoSyncTool.Logger.log("  read len: " + len);
 			String key = new String(buffer, 0, len);
-			MoSyncTool.Logger.log(
-				"DefaultUpdater2.requestKeyFromServer key:\n" + key);
+			MoSyncTool.Logger.log("  key: " + key);
 			return key;
 		} finally {
 			response.close();
