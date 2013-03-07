@@ -227,6 +227,11 @@ public class DefaultUpdater2 extends UpdateManagerBase implements IUpdater {
 					userKey = requestKeyFromServer();
 					MoSyncTool.getDefault().setProperty(
 							MoSyncTool.USER_HASH_PROP_2, userKey);
+
+					MoSyncTool.Logger.log("DefaultUpdater2.run userKey: " + userKey);
+					String userKey2 = MoSyncTool.getDefault().getProperty(
+						MoSyncTool.USER_HASH_PROP_2);
+					MoSyncTool.Logger.log("DefaultUpdater2.run userKey2: " + userKey2);
 				}
 
 				int userStatus = getUserStatus();
@@ -525,7 +530,10 @@ public class DefaultUpdater2 extends UpdateManagerBase implements IUpdater {
 		try {
 			InputStream input = response.getContent();
 			int len = input.read(buffer);
-			return new String(buffer, 0, len);
+			String key = new String(buffer, 0, len);
+			MoSyncTool.Logger.log(
+				"DefaultUpdater2.requestKeyFromServer key:\n" + key);
+			return key;
 		} finally {
 			response.close();
 		}

@@ -102,6 +102,7 @@ public abstract class UpdateManagerBase {
     public void setUserHash(String hash) {
         hash = hash == null ? null : hash.trim();
         MoSyncTool.getDefault().setProperty(MoSyncTool.USER_HASH_PROP_2, hash);
+        MoSyncTool.Logger.log("UpdateManagerBase.setUserHash hash: " + hash);
     }
 
     public boolean shouldPerformAutoUpdate() {

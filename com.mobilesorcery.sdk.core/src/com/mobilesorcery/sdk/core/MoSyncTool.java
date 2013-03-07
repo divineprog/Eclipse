@@ -700,4 +700,43 @@ public class MoSyncTool {
 		}
 	}
 
+	/**
+	 * Simple log utility. Logs to a file.
+	 * Logs to file "mosync_eclipse.log" by default.
+	 * Usage: 
+	 *   MoSyncTool.Logger.doLogging(true); 
+	 *   MoSyncTool.Logger.log("Hello World");
+	 */
+	public static class Logger
+	{
+		/**
+		 * Configure by setting these parameters (ouch).
+		 */
+		public static String mLogFile = "mosync_eclipse.log";
+		public static boolean mDoLogging = true;
+
+		public static void doLogging(boolean on)
+		{
+			mDoLogging = on;
+		}
+
+		public static void log(String s)
+		{
+			if (!mDoLogging) { return; }
+
+			try
+			{
+				java.io.PrintWriter writer =
+					new java.io.PrintWriter(
+						new java.io.BufferedWriter(
+							new java.io.FileWriter(mLogFile, true)));
+				writer.println(s);
+				writer.close();
+			}
+			catch (Exception ex)
+			{
+				// Oh No!
+			}
+		}
+	}
 }
